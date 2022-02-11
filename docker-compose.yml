@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  camunda-server:
+    build: ./inzagher-camunda-server
+    image: "inzagher/camunda-sandbox-server"
+    container_name: "camunda-sandbox-server"
+    ports:
+      - "8090:8090"
+  camunda-client:
+    build: ./inzagher-camunda-client
+    image: "inzagher/camunda-sandbox-client"
+    container_name: "camunda-sandbox-client"
+    ports:
+      - "8095:8095"
