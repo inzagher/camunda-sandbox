@@ -11,5 +11,7 @@ services:
     build: ./inzagher-camunda-client
     image: "inzagher/camunda-sandbox-client"
     container_name: "camunda-sandbox-client"
+    depends_on:
+      - "camunda-server"
     ports:
       - "8095:8095"
