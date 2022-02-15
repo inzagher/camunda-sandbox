@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_10wfdh3" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="ServiceHealthCheckProcess" name="Service Health Check Process" isExecutable="true">
+    <bpmn:startEvent id="ProcessStartEvent" name="Start">
+      <bpmn:outgoing>Flow_01m7sb0</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_1005lta" messageRef="Message_0786vcd" />
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_01m7sb0" sourceRef="ProcessStartEvent" targetRef="Delay" />
+    <bpmn:intermediateCatchEvent id="Delay" name="5 Seconds">
+      <bpmn:incoming>Flow_01m7sb0</bpmn:incoming>
+      <bpmn:outgoing>Flow_0xl003e</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_0j07dz3">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">PT5S</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_0xl003e" sourceRef="Delay" targetRef="Ping" />
+    <bpmn:endEvent id="ProcessEndEvent" name="End">
+      <bpmn:incoming>Flow_07skcow</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_07skcow" sourceRef="Ping" targetRef="ProcessEndEvent" />
+    <bpmn:serviceTask id="Ping" name="Ping" camunda:type="external" camunda:topic="HealthCheckRequest">
+      <bpmn:incoming>Flow_0xl003e</bpmn:incoming>
+      <bpmn:outgoing>Flow_07skcow</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmn:message id="Message_0786vcd" name="New Ticket" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="ServiceHealthCheckProcess">
+      <bpmndi:BPMNEdge id="Flow_01m7sb0_di" bpmnElement="Flow_01m7sb0">
+        <di:waypoint x="198" y="100" />
+        <di:waypoint x="252" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0xl003e_di" bpmnElement="Flow_0xl003e">
+        <di:waypoint x="288" y="100" />
+        <di:waypoint x="360" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_07skcow_di" bpmnElement="Flow_07skcow">
+        <di:waypoint x="460" y="100" />
+        <di:waypoint x="532" y="100" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Event_1jozukj_di" bpmnElement="ProcessStartEvent">
+        <dc:Bounds x="162" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="168" y="125" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0r4yf0d_di" bpmnElement="Delay">
+        <dc:Bounds x="252" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="244" y="125" width="53" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1iyavva_di" bpmnElement="ProcessEndEvent">
+        <dc:Bounds x="532" y="82" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="540" y="125" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1tgif5x_di" bpmnElement="Ping">
+        <dc:Bounds x="360" y="60" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
