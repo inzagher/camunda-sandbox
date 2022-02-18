@@ -1,0 +1,9 @@
+server.port: 8090
+spring:
+  datasource:
+    url: "jdbc:postgresql://postgresql-server:5432/camunda"
+    username: sa
+    password: 12345
+camunda.bpm.admin-user:
+  id: demo
+  password: demo

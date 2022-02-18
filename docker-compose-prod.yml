@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  camunda-server:
+    build: ./inzagher-camunda-server
+    image: "inzagher/camunda-sandbox-server"
+    container_name: "camunda-sandbox-server"
+    depends_on:
+      - "postgresql-database"
+    ports:
+      - "8090:8090"
+    environment:
+      - "SPRING_PROFILES_ACTIVE=prod"
+  camunda-client:
+    build: ./inzagher-camunda-client
+    image: "inzagher/camunda-sandbox-client"
+    container_name: "camunda-sandbox-client"
+    depends_on:
+      - "camunda-server"
+    ports:
+      - "8095:8095"
+  postgresql-database:
+    container_name: "postgresql-server"
+    image: "postgres:14-alpine"
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_USER=sa"
+      - "POSTGRES_PASSWORD=12345"
+      - "POSTGRES_DB=camunda"
